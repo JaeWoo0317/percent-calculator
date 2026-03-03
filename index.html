@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퍼센트 계산기 — 비율, 할인율, 증감률 계산 | 무료 온라인 도구</title>
+    <meta name="description" content="퍼센트 계산기 무료 온라인 도구. 비율 계산, 할인가 계산, 증감률 계산을 간편하게 할 수 있습니다. 직장인, 학생, 자영업자 모두를 위한 실용 도구.">
+    <meta name="keywords" content="퍼센트 계산기, 비율 계산, 할인율 계산, 증감률 계산, 퍼센트 계산, % 계산기">
+    <meta property="og:title" content="퍼센트 계산기 — 비율, 할인율, 증감률 계산">
+    <meta property="og:description" content="퍼센트/비율/할인율/증감률을 간편하게 계산합니다.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://jaewoo0317.github.io/percent-calculator/">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5453815259196400" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --bg: #F5F7F3;
+            --surface: #FFFFFF;
+            --surface-alt: #ECF0E8;
+            --text-primary: #1A2418;
+            --text-secondary: #5A6B57;
+            --text-tertiary: #94A391;
+            --accent: #2E8B57;
+            --accent-light: #E8F5EE;
+            --accent-hover: #247048;
+            --border: #D8DED5;
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
+            --radius: 14px;
+            --radius-sm: 10px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .header {
+            text-align: center;
+            padding: 48px 20px 0;
+            animation: fadeDown 0.6s ease-out;
+        }
+        .header h1 {
+            font-size: clamp(28px, 5vw, 40px);
+            font-weight: 700;
+            letter-spacing: -1.5px;
+        }
+        .header h1 span { color: var(--accent); }
+        .header p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            max-width: 420px;
+            margin: 8px auto 0;
+        }
+        .container {
+            max-width: 760px;
+            margin: 32px auto;
+            padding: 0 20px 60px;
+        }
+        .ad-banner {
+            border: 1.5px dashed var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 24px;
+            animation: fadeUp 0.6s ease-out 0.1s both;
+        }
+        /* Calc Cards */
+        .calc-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .calc-card {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            padding: 24px;
+            animation: fadeUp 0.6s ease-out 0.2s both;
+            transition: border-color 0.3s;
+        }
+        .calc-card:nth-child(2) { animation-delay: 0.3s; }
+        .calc-card:nth-child(3) { animation-delay: 0.4s; }
+        .calc-card:focus-within {
+            border-color: var(--accent);
+        }
+        .calc-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .calc-title .icon {
+            font-size: 20px;
+        }
+        .calc-title .badge {
+            font-size: 11px;
+            font-weight: 500;
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        .calc-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+        .calc-row input {
+            width: 120px;
+            padding: 12px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            color: var(--text-primary);
+            outline: none;
+            text-align: center;
+            transition: border-color 0.2s;
+            background: var(--surface);
+        }
+        .calc-row input:focus {
+            border-color: var(--accent);
+        }
+        .calc-row input.wide { width: 150px; }
+        .equals {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .result-inline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 140px;
+            padding: 12px 18px;
+            background: var(--accent-light);
+            border: 1.5px solid var(--accent);
+            border-radius: var(--radius-sm);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+            transition: all 0.2s;
+        }
+        .calc-example {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: var(--surface-alt);
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .calc-example strong {
+            color: var(--text-primary);
+        }
+        /* Quick buttons */
+        .quick-section {
+            margin-top: 16px;
+        }
+        .quick-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 8px;
+        }
+        .quick-btns {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .quick-btn {
+            padding: 6px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 13px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quick-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-light);
+        }
+        /* Info */
+        .info-section {
+            margin-top: 32px;
+            animation: fadeUp 0.6s ease-out 0.5s both;
+        }
+        .info-card {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 28px 24px;
+        }
+        .info-card h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: -0.5px;
+        }
+        .info-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+        .info-card p:last-child { margin-bottom: 0; }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-top: 20px;
+        }
+        @media (min-width: 520px) {
+            .info-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .info-item {
+            padding: 16px;
+            background: var(--surface-alt);
+            border-radius: var(--radius-sm);
+        }
+        .info-item strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .info-item span {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .home-link {
+            display: inline-block;
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .home-link:hover { text-decoration: underline; }
+        .footer {
+            text-align: center;
+            padding: 32px 20px 24px;
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 480px) {
+            .header { padding: 32px 16px 0; }
+            .container { padding: 0 12px 48px; margin-top: 24px; }
+            .calc-card { padding: 18px 14px; }
+            .calc-row input { width: 100px; font-size: 15px; padding: 10px 10px; }
+            .result-inline { min-width: 110px; font-size: 16px; padding: 10px 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <h1>퍼센트 <span>계산기</span></h1>
+    <p>비율, 할인율, 증감률을 간편하게 계산합니다</p>
+</header>
+
+<main class="container">
+    <div class="ad-banner">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5453815259196400" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <div class="calc-grid">
+        <!-- 1. A의 B%는? -->
+        <div class="calc-card">
+            <div class="calc-title">
+                <span class="icon">📊</span>
+                A의 B%는 얼마?
+                <span class="badge">가장 많이 사용</span>
+            </div>
+            <div class="calc-row">
+                <input type="number" id="c1_a" value="50000" class="wide">
+                <span>의</span>
+                <input type="number" id="c1_b" value="30">
+                <span>%</span>
+                <span class="equals">=</span>
+                <span class="result-inline" id="c1_result">15,000</span>
+            </div>
+            <div class="calc-example">
+                <strong>예시:</strong> 50,000원의 30% 할인 → 할인금액 15,000원 → 결제금액 35,000원
+            </div>
+            <div class="quick-section">
+                <div class="quick-title">빠른 선택</div>
+                <div class="quick-btns">
+                    <button class="quick-btn" onclick="setC1(10)">10%</button>
+                    <button class="quick-btn" onclick="setC1(20)">20%</button>
+                    <button class="quick-btn" onclick="setC1(30)">30%</button>
+                    <button class="quick-btn" onclick="setC1(50)">50%</button>
+                    <button class="quick-btn" onclick="setC1(70)">70%</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. A는 B의 몇 %? -->
+        <div class="calc-card">
+            <div class="calc-title">
+                <span class="icon">🔍</span>
+                A는 B의 몇 %?
+            </div>
+            <div class="calc-row">
+                <input type="number" id="c2_a" value="35">
+                <span>는</span>
+                <input type="number" id="c2_b" value="200">
+                <span>의</span>
+                <span class="equals">=</span>
+                <span class="result-inline" id="c2_result">17.5%</span>
+            </div>
+            <div class="calc-example">
+                <strong>예시:</strong> 시험 200점 만점에 35점 → 17.5%
+            </div>
+        </div>
+
+        <!-- 3. 증감률 -->
+        <div class="calc-card">
+            <div class="calc-title">
+                <span class="icon">📈</span>
+                증감률 계산
+            </div>
+            <div class="calc-row">
+                <input type="number" id="c3_a" value="80" class="wide" placeholder="이전">
+                <span>→</span>
+                <input type="number" id="c3_b" value="120" class="wide" placeholder="이후">
+                <span class="equals">=</span>
+                <span class="result-inline" id="c3_result">+50%</span>
+            </div>
+            <div class="calc-example">
+                <strong>예시:</strong> 매출 80만원 → 120만원 = 50% 증가
+            </div>
+        </div>
+
+        <!-- 4. 할인가 계산 -->
+        <div class="calc-card">
+            <div class="calc-title">
+                <span class="icon">🏷️</span>
+                할인가 계산
+            </div>
+            <div class="calc-row">
+                <input type="number" id="c4_price" value="89000" class="wide" placeholder="원래 가격">
+                <span>원에서</span>
+                <input type="number" id="c4_pct" value="30">
+                <span>% 할인</span>
+            </div>
+            <div style="display:flex; gap:12px; margin-top:14px; flex-wrap:wrap;">
+                <div class="result-inline" id="c4_discount" style="flex:1; text-align:center;">−26,700원</div>
+                <div class="result-inline" id="c4_final" style="flex:1; text-align:center; background:#E8F5EE; border-color:var(--accent);">62,300원</div>
+            </div>
+            <div class="calc-example">
+                <strong>할인 금액</strong>과 <strong>최종 결제 금액</strong>을 한눈에 확인할 수 있습니다.
+            </div>
+            <div class="quick-section">
+                <div class="quick-title">할인율 빠른 선택</div>
+                <div class="quick-btns">
+                    <button class="quick-btn" onclick="setC4(5)">5%</button>
+                    <button class="quick-btn" onclick="setC4(10)">10%</button>
+                    <button class="quick-btn" onclick="setC4(15)">15%</button>
+                    <button class="quick-btn" onclick="setC4(20)">20%</button>
+                    <button class="quick-btn" onclick="setC4(30)">30%</button>
+                    <button class="quick-btn" onclick="setC4(50)">50%</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ad Middle -->
+    <div class="ad-banner" style="margin-top: 24px;">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5453815259196400" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- SEO Content -->
+    <div class="info-section">
+        <div class="info-card">
+            <h2>퍼센트 계산기, 언제 필요할까요?</h2>
+            <p>퍼센트(%) 계산은 일상에서 가장 자주 필요한 계산 중 하나입니다. 쇼핑 할인, 성적 비율, 매출 증감률, 세금 계산 등 다양한 상황에서 이 도구를 활용해보세요.</p>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>🛍 쇼핑</strong>
+                    <span>할인율 적용 후 최종 가격, 추가 할인 계산</span>
+                </div>
+                <div class="info-item">
+                    <strong>💼 직장</strong>
+                    <span>매출 증감률, 전년 대비 성장률, KPI 달성률</span>
+                </div>
+                <div class="info-item">
+                    <strong>📚 학교</strong>
+                    <span>시험 점수 비율, 출석률, 과제 배점 계산</span>
+                </div>
+                <div class="info-item">
+                    <strong>💰 재테크</strong>
+                    <span>수익률, 이자율, 세금 비율 계산</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-banner" style="margin-top: 24px;">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5453815259196400" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <div style="text-align:center;">
+        <a href="https://jaewoo0317.github.io/" class="home-link">← 도구 모음으로 돌아가기</a>
+    </div>
+</main>
+
+<footer class="footer">
+    © 2025 퍼센트 계산기 | 무료 온라인 비율 · 할인율 · 증감률 계산기
+</footer>
+
+<script>
+    function fmt(n) {
+        if (Number.isInteger(n)) return n.toLocaleString('ko-KR');
+        return n.toLocaleString('ko-KR', { maximumFractionDigits: 2 });
+    }
+
+    // Calc 1: A의 B%
+    function calcC1() {
+        const a = parseFloat(document.getElementById('c1_a').value) || 0;
+        const b = parseFloat(document.getElementById('c1_b').value) || 0;
+        const result = a * b / 100;
+        document.getElementById('c1_result').textContent = fmt(result);
+        // Update example
+    }
+    function setC1(pct) {
+        document.getElementById('c1_b').value = pct;
+        calcC1();
+    }
+
+    // Calc 2: A는 B의 몇%
+    function calcC2() {
+        const a = parseFloat(document.getElementById('c2_a').value) || 0;
+        const b = parseFloat(document.getElementById('c2_b').value) || 0;
+        if (b === 0) { document.getElementById('c2_result').textContent = '—'; return; }
+        const result = (a / b) * 100;
+        document.getElementById('c2_result').textContent = fmt(result) + '%';
+    }
+
+    // Calc 3: 증감률
+    function calcC3() {
+        const a = parseFloat(document.getElementById('c3_a').value) || 0;
+        const b = parseFloat(document.getElementById('c3_b').value) || 0;
+        if (a === 0) { document.getElementById('c3_result').textContent = '—'; return; }
+        const result = ((b - a) / a) * 100;
+        const sign = result >= 0 ? '+' : '';
+        document.getElementById('c3_result').textContent = sign + fmt(result) + '%';
+        document.getElementById('c3_result').style.color = result >= 0 ? 'var(--accent)' : '#E34040';
+    }
+
+    // Calc 4: 할인가
+    function calcC4() {
+        const price = parseFloat(document.getElementById('c4_price').value) || 0;
+        const pct = parseFloat(document.getElementById('c4_pct').value) || 0;
+        const discount = price * pct / 100;
+        const final_price = price - discount;
+        document.getElementById('c4_discount').textContent = '−' + fmt(Math.round(discount)) + '원';
+        document.getElementById('c4_final').textContent = fmt(Math.round(final_price)) + '원';
+    }
+    function setC4(pct) {
+        document.getElementById('c4_pct').value = pct;
+        calcC4();
+    }
+
+    // Event listeners
+    document.getElementById('c1_a').addEventListener('input', calcC1);
+    document.getElementById('c1_b').addEventListener('input', calcC1);
+    document.getElementById('c2_a').addEventListener('input', calcC2);
+    document.getElementById('c2_b').addEventListener('input', calcC2);
+    document.getElementById('c3_a').addEventListener('input', calcC3);
+    document.getElementById('c3_b').addEventListener('input', calcC3);
+    document.getElementById('c4_price').addEventListener('input', calcC4);
+    document.getElementById('c4_pct').addEventListener('input', calcC4);
+
+    // Init
+    calcC1(); calcC2(); calcC3(); calcC4();
+</script>
+
+</body>
+</html>
